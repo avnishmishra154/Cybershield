@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberShield | AI-Powered Malware Detection</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader">
+            <div class="shield-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <p>Initializing CyberShield...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+     <!-- In the navigation section -->
+<div class="auth-buttons">
+    <a href="login.html" class="btn-login">
+        <i class="fas fa-sign-in-alt"></i> Login
+    </a>
+    <a href="signup.html" class="btn-signup">
+        <i class="fas fa-user-plus"></i> Sign Up
+    </a>
+</div>
+
+<style>
+.btn-login, .btn-signup {
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-login {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-login:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-signup {
+    background: #4361ee;
+    color: white;
+    border: 1px solid #4361ee;
+}
+
+.btn-signup:hover {
+    background: #3a56d4;
+}
+</style>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>CyberShield</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#scan"><i class="fas fa-search"></i> Scan</a></li>
+                <li><a href="#reports"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="#tools"><i class="fas fa-tools"></i> Tools</a></li>
+             
+<!-- Add this in your navigation or hero section -->
+<a href="about-contact.html" class="btn-contact" style="
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 25px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    margin-left: 15px;
+">
+    <i class="fas fa-info-circle"></i>
+    About & Contact
+</a>
+
+<style>
+.btn-contact:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    border-color: #4361ee;
+}
+</style>
+               
+                <a href="login.html" class="btn-login-small">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                
+                <a href="signup.html" class="btn-signup-small">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </a>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">AI-Powered</span>
+                    <span>Malware Detection</span>
+                </h1>
+                <p class="hero-subtitle">Real-time protection against viruses, malware, and cyber threats with advanced machine learning algorithms</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <i class="fas fa-virus"></i>
+                        <div>
+                            
+                            <p>Aware</p>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-shield-virus"></i>
+                        <div>
+                            
+                            <p>Safe </p>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            
+                            <p>Scan</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary start-scan-btn">
+                    <i class="fas fa-play"></i> Start Scanning
+                </button>
+            </div>
+            <div class="hero-visual">
+                <div class="scanning-animation">
+                    <div class="radar"></div>
+                    <div class="threat-dots"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+       
+             
+            </div>
+        </div>
+    <!-- Scanner Section -->
+    <section class="scanner-section" id="scan">
+        <div class="container">
+            <h2 class="section-title">Advanced Threat Scanner</h2>
+            <p class="section-subtitle">Upload files or enter URLs for immediate security analysis</p>
+
+            <!-- Scanner Tabs -->
+            <div class="scanner-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="file">
+                        <i class="fas fa-file-upload"></i> File Scan
+                    </button>
+                    <button class="tab-btn" data-tab="url">
+                        <i class="fas fa-link"></i> URL Scan
+                    </button>
+                    <button class="tab-btn" data-tab="hash">
+                        <i class="fas fa-hashtag"></i> Hash Check
+                    </button>
+                </div>
+
+                <!-- File Scanner -->
+                <div class="tab-content active" id="file-tab">
+                    <div class="scanner-card">
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Drag & Drop Files Here</h3>
+                            <p>Supports all file types up to 256MB</p>
+                            <input type="file" id="fileInput" multiple>
+                            <button class="btn-secondary">
+                                <i class="fas fa-folder-open"></i> Browse Files
+                            </button>
+                        </div>
+                        <div class="file-list" id="fileList"></div>
+                        <button class="btn-primary scan-now-btn" id="scanFileBtn">
+                            <i class="fas fa-search"></i> Scan Files Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- URL Scanner -->
+                <div class="tab-content" id="url-tab">
+                    <div class="scanner-card">
+                        <div class="url-input-group">
+                            <i class="fas fa-globe"></i>
+                            <input type="url" id="urlInput" placeholder="https://example.com">
+                            <button class="btn-primary" id="scanUrlBtn">
+                                <i class="fas fa-search"></i> Scan URL
+                            </button>
+                        </div>
+                        <div class="recent-scans">
+                            <h4><i class="fas fa-history"></i> Recent Scans</h4>
+                            <div class="scan-history">
+                                <!-- Will be populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hash Scanner -->
+                <div class="tab-content" id="hash-tab">
+                    <div class="scanner-card">
+                        <div class="hash-input-group">
+                            <select id="hashType">
+                                <option value="md5">MD5</option>
+                                <option value="sha1">SHA-1</option>
+                                <option value="sha256">SHA-256</option>
+                            </select>
+                            <input type="text" id="hashInput" placeholder="Enter hash value">
+                            <button class="btn-primary" id="scanHashBtn">
+                                <i class="fas fa-search"></i> Check Hash
+                            </button>
+                        </div>
+                        <div class="hash-examples">
+                            <p><strong>Example Hashes:</strong></p>
+                            <code>MD5: 098f6bcd4621d373cade4e832627b4f6</code>
+                            <code>SHA256: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <div class="container">
+            <h2 class="section-title">Scan Results</h2>
+            
+            <div class="results-container">
+                <!-- Results will be populated here -->
+                <div class="empty-results" id="emptyResults">
+                    <i class="fas fa-search"></i>
+                    <h3>No Scan Results Yet</h3>
+                    <p>Upload a file or enter a URL to start scanning</p>
+                </div>
+
+                <div class="results-grid" id="resultsGrid"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Dashboard -->
+    <section class="dashboard-section">
+        <div class="container">
+            <h2 class="section-title">Security Dashboard</h2>
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="dashboard-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Threat Activity</h3>
+                    </div>
+                    <div class="threat-chart" id="threatChart">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="dashboard-header">
+                        <i class="fas fa-viruses"></i>
+                        <h3>Threat Types</h3>
+                    </div>
+                    <div class="threat-types" id="threatTypes">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="dashboard-header">
+                        <i class="fas fa-clock"></i>
+                        <h3>Recent Activity</h3>
+                    </div>
+                    <div class="activity-log" id="activityLog">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>CyberShield</span>
+                    </div>
+                    <p>Advanced malware detection powered by AI</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Product</h4>
+                        <a href="#">Features</a>
+                        <a href="#">API</a>
+                        <a href="#">Pricing</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Resources</h4>
+                        <a href="#">Documentation</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Threat Reports</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Legal</h4>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Security</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CyberShield. All rights reserved.</p>
+                <p class="disclaimer">
+                    <i class="fas fa-exclamation-triangle"></i>
+                   Be safe :D.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scan Results Modal -->
+    <div class="modal" id="resultsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-medical-alt"></i> Scan Results</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalResults">
+                <!-- Results will be shown here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary">Export Report</button>
+                <button class="btn-primary">Scan Another</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="notificationToast">
+        <div class="toast-content">
+            <i class="fas fa-bell"></i>
+            <span class="toast-message"></span>
+        </div>
+        <div class="toast-progress"></div>
+    </div>
+
+    <script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
