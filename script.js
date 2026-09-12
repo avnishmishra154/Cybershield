@@ -1,4 +1,6 @@
 // Main Scanner Application
+// Main Scanner Application
+const API_URL = 'https://g6mzdgtzo4.execute-api.ap-south-1.amazonaws.com/prod/cybershield-scan-handler';
 class CyberShieldScanner {
     constructor() {
         this.scanHistory = [];
@@ -184,7 +186,7 @@ class CyberShieldScanner {
         this.showResultsModal();
     }
 
-    async scanURL() {
+        async scanURL() {
         const urlInput = document.getElementById('urlInput');
         if (!urlInput) return;
         
@@ -201,28 +203,43 @@ class CyberShieldScanner {
         }
 
         this.showNotification(`Scanning URL: ${url}`, 'info');
-        
-        // Simulate scanning process
-        await this.simulateScanDelay(1500);
 
-        const isMalicious = Math.random() > 0.8;
-        const threat = isMalicious ? this.getRandomThreat() : null;
+        try {
+            const response = await fetch(`${API_URL}?url=${encodeURIComponent(url)}`);
+            const data = await response.json();
 
-        this.addScanResult({
-            type: 'url',
-            name: url,
-            status: isMalicious ? 'malicious' : 'safe',
-            threat: threat,
-            timestamp: new Date().toISOString()
-        });
+            if (data.status !== 'success') {
+                this.showNotification(data.error || 'Scan failed', 'error');
+                return;
+            }
 
-        this.addToScanHistory(url, isMalicious ? 'malicious' : 'safe');
-        urlInput.value = '';
-        
-        this.showNotification('URL scan completed!', 'success');
-        this.showResultsModal();
+            const stats = data.stats;
+            const totalEngines = (stats.malicious || 0) + (stats.suspicious || 0) + 
+                                (stats.harmless || 0) + (stats.undetected || 0);
+            const isMalicious = (stats.malicious || 0) > 0;
+            const isSuspicious = (stats.suspicious || 0) > 0;
+
+            const result = {
+                type: 'url',
+                name: url,
+                status: isMalicious ? 'malicious' : (isSuspicious ? 'suspicious' : 'safe'),
+                stats: stats,
+                totalEngines: totalEngines,
+                timestamp: new Date().toISOString()
+            };
+
+            this.addScanResult(result);
+            this.addToScanHistory(url, result.status);
+            urlInput.value = '';
+            
+            this.showNotification('URL scan completed!', 'success');
+            this.showResultsModal();
+
+        } catch (error) {
+            console.error('Scan error:', error);
+            this.showNotification('Network error. Please try again.', 'error');
+        }
     }
-
     async scanHash() {
         const hashInput = document.getElementById('hashInput');
         const hashType = document.getElementById('hashType');
@@ -257,7 +274,7 @@ class CyberShieldScanner {
         this.showResultsModal();
     }
 
-    addScanResult(result) {
+        addScanResult(result) {
         const resultsGrid = document.getElementById('resultsGrid');
         const emptyResults = document.getElementById('emptyResults');
         
@@ -267,7 +284,6 @@ class CyberShieldScanner {
             emptyResults.style.display = 'none';
         }
 
-        // Create result card
         const resultCard = document.createElement('div');
         resultCard.className = 'result-card';
         
@@ -277,13 +293,15 @@ class CyberShieldScanner {
             malicious: 'malicious'
         }[result.status];
 
-        let threatInfo = '';
-        if (result.threat) {
-            threatInfo = `
+        let statsHtml = '';
+        if (result.stats) {
+            statsHtml = `
                 <div class="threat-info">
-                    <p><strong>Threat:</strong> ${result.threat.name}</p>
-                    <p><strong>Type:</strong> ${result.threat.type}</p>
-                    <p><strong>Severity:</strong> ${result.threat.severity}</p>
+                    <p><strong>Malicious:</strong> ${result.stats.malicious || 0}</p>
+                    <p><strong>Suspicious:</strong> ${result.stats.suspicious || 0}</p>
+                    <p><strong>Harmless:</strong> ${result.stats.harmless || 0}</p>
+                    <p><strong>Undetected:</strong> ${result.stats.undetected || 0}</p>
+                    <p><strong>Total Engines:</strong> ${result.totalEngines || 0}</p>
                 </div>
             `;
         }
@@ -298,13 +316,7 @@ class CyberShieldScanner {
                     ${result.status.toUpperCase()}
                 </span>
             </div>
-            ${threatInfo}
-            <div class="threat-indicators">
-                <div class="threat-indicator">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Security Score: ${Math.floor(Math.random() * 100)}/100</span>
-                </div>
-            </div>
+            ${statsHtml}
             <div class="threat-meter">
                 <div class="threat-meter-fill" style="width: ${
                     result.status === 'malicious' ? '90%' : 
@@ -321,12 +333,10 @@ class CyberShieldScanner {
 
         resultsGrid.insertBefore(resultCard, resultsGrid.firstChild);
         this.scanHistory.push(result);
-
-        // Update dashboard
         this.updateDashboard();
     }
 
-    showResultsModal() {
+        showResultsModal() {
         const modal = document.getElementById('resultsModal');
         const modalBody = document.getElementById('modalResults');
         
@@ -334,6 +344,20 @@ class CyberShieldScanner {
         
         const latestResult = this.scanHistory[this.scanHistory.length - 1];
         if (!latestResult) return;
+
+        let statsSection = '';
+        if (latestResult.stats) {
+            statsSection = `
+                <div class="additional-info">
+                    <h4><i class="fas fa-chart-bar"></i> VirusTotal Detection Stats</h4>
+                    <p>Malicious: <strong>${latestResult.stats.malicious || 0}</strong></p>
+                    <p>Suspicious: <strong>${latestResult.stats.suspicious || 0}</strong></p>
+                    <p>Harmless: <strong>${latestResult.stats.harmless || 0}</strong></p>
+                    <p>Undetected: <strong>${latestResult.stats.undetected || 0}</strong></p>
+                    <p>Total Engines: <strong>${latestResult.totalEngines || 0}</strong></p>
+                </div>
+            `;
+        }
 
         modalBody.innerHTML = `
             <div class="modal-result">
@@ -345,21 +369,8 @@ class CyberShieldScanner {
                             ${latestResult.status.toUpperCase()}
                         </span>
                     </p>
-                    ${latestResult.threat ? `
-                        <p><strong>Threat Detected:</strong> ${latestResult.threat.name}</p>
-                        <p><strong>Description:</strong> ${latestResult.threat.description}</p>
-                        <p><strong>Recommended Action:</strong> Quarantine and remove immediately</p>
-                    ` : `
-                        <p><strong>Result:</strong> No threats detected</p>
-                        <p><strong>Recommendation:</strong> File appears to be safe</p>
-                    `}
                 </div>
-                <div class="additional-info">
-                    <h4><i class="fas fa-chart-bar"></i> Statistics</h4>
-                    <p>Detection Rate: 99.9%</p>
-                    <p>False Positive Rate: 0.01%</p>
-                    <p>Scan Time: 1.2 seconds</p>
-                </div>
+                ${statsSection}
             </div>
         `;
 
