@@ -1,5 +1,4 @@
 // Main Scanner Application
-// Main Scanner Application
 const API_URL = 'https://g6mzdgtzo4.execute-api.ap-south-1.amazonaws.com/prod/cybershield-scan-handler';
 class CyberShieldScanner {
     constructor() {
