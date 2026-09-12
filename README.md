@@ -24,44 +24,6 @@ A full-stack cybersecurity platform that scans URLs in **real-time** using the *
 - 🎨 **Modern responsive UI** with clean design
 - ✅ **CORS-enabled API** with proper error handling
 
----
-## 🏗️ Architecture
-┌──────────────────┐
-│   User Browser   │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────────────┐
-│    Vercel Frontend       │
-│   (HTML, CSS, JS)        │
-└────────┬─────────────────┘
-         │ HTTPS Request
-         ▼
-┌──────────────────────────┐
-│    AWS API Gateway       │
-│    (HTTP API /prod)      │
-└────────┬─────────────────┘
-         │
-         ▼
-┌──────────────────────────┐
-│      AWS Lambda          │
-│     (Python 3.11)        │
-└───┬──────────┬───────────┘
-    │          │
-    ▼          ▼
-┌────────┐  ┌──────────────┐
-│ AWS S3 │  │ AWS DynamoDB │
-│Reports │  │   History    │
-└────────┘  └──────────────┘
-    │
-    ▼
-┌──────────────────────────┐
-│   VirusTotal API v3      │
-│   (70+ AV Engines)       │
-└──────────────────────────┘
-
-
----
 
 ## 🛠️ Tech Stack
 
